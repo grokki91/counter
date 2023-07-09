@@ -15,14 +15,12 @@ app.post('/counter/:id/incr', async (req, res) => {
     const {books} = store
     const {id} = req.params
     const idx = books.findIndex(book => book.id === id)
-    console.log('Книги - ', books);
-    console.log('Store - ', store);
 
     if (idx !== - 1) {
         try {
             const count = await client.incr(id)
             books[idx].count = count
-            res.json({message: `Количество просмотров - ${count}`})
+            res.json({count: count})
         } catch (error) {
             res.json({errCode: 500, errMessage: error})
         }
@@ -36,9 +34,6 @@ app.get('/counter/:id', async (req, res) => {
     const {books} = store
     const {id} = req.params
     const idx = books.findIndex(book => book.id === id)
-    console.log('Книги - ', books);
-    console.log('Store - ', store);
-
 
     if (idx !== - 1) {
         try {
